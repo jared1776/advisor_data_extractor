@@ -41,10 +41,10 @@ venv\Scripts\activate      # Windows
 
 ## Usage
 
-# CLI mode
+# Run with CLI mode using included sample
 python advisor_data_extractor.py --in samples/example_input.xml --out samples/example_output.csv
 
-# GUI mode (file pickers)
+# Or run with GUI mode (file pickers)
 python advisor_data_extractor.py
 
 Run the script:
