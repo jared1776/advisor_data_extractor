@@ -172,16 +172,24 @@ def run_with_gui():
     extract_firm_data(xml_file_path, output_csv_path)
     return 0
 
-def run_with_cli(input_path, output_path):
+def run_with_cli(input_path, output_path=None):
     if not os.path.isfile(input_path):
         print(f"Input file not found: {input_path}")
         return 1
+
+    # If output path not given, default to "output.csv" in same directory as input file
+    if not output_path:
+        output_path = os.path.join(os.path.dirname(os.path.abspath(input_path)), "output.csv")
+        print(f"No output path provided. Saving to default: {output_path}")
+
     out_dir = os.path.dirname(os.path.abspath(output_path)) or "."
     if not os.path.isdir(out_dir):
         print(f"Output directory does not exist: {out_dir}")
         return 1
+
     extract_firm_data(input_path, output_path)
     return 0
+
 
 def parse_args(argv):
     parser = argparse.ArgumentParser(
@@ -194,9 +202,12 @@ def parse_args(argv):
 def main():
     args = parse_args(sys.argv[1:])
 
-    # If both CLI args provided, run headless
-    if args.infile and args.outfile:
+    # If CLI input given
+    if args.infile:
         return run_with_cli(args.infile, args.outfile)
+
+    # Otherwise, fall back to GUI picker
+    return run_with_gui()
 
     # Otherwise, fall back to Tkinter picker
     return run_with_gui()
