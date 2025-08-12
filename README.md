@@ -25,6 +25,8 @@ This tool parses SEC Form ADV XML filings to extract detailed information about 
   - `xml`
   - `csv`
   - `tkinter` (comes with most Python installations, but may require separate installation on some Linux systems)
+# No third-party dependencies required.
+# Uses Python standard library only: xml, csv, argparse, tkinter.
 
 ## Installation
 
