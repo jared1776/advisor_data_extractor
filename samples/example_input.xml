@@ -1,0 +1,13 @@
+<Firm>
+    <Info BusNm="Example Advisers LLC" LegalNm="Example Advisers Legal Name" />
+    <MainAddr Strt1="123 Main St" City="New York" State="NY" Cntry="USA" PostlCd="10001" />
+    <Item1 Q1ODesc="Over $1B AUM" Q1O="Y" />
+    <Item5F Q5F2A="1500000000" Q5F2B="500000000" Q5F2C="2000000000" Q5F3="250000000" />
+    <Item5G Q5G1="Y" Q5G2="Y" Q5G4="Y" Q5G12Oth="ESG Consulting" />
+    <Item5H Q5H="200" Q5HMT500="Y" />
+    <Item5I Q5I1="N" Q5I2A="0" Q5I2B="0" Q5I2C="0" />
+    <Item5J Q5J1="N" Q5J2="N" />
+    <WebAddrs>
+        <WebAddr>https://www.exampleadvisers.com</WebAddr>
+    </WebAddrs>
+</Firm>
