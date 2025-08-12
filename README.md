@@ -1,80 +1,61 @@
 # advisor_data_extractor
-This tool parses SEC Form ADV XML filings to extract detailed information about registered investment advisers (RIAs) and portfolio managers.
-It captures key firm attributes such as AUM, services offered, firm classification, location details, and website addresses, then exports the results into a structured CSV file for further analysis.
-Features
-Parses SEC Form ADV XML data.
 
-Extracts:
+This tool parses SEC Form ADV XML filings to extract detailed information about registered investment advisers (RIAs) and portfolio managers. It captures key firm attributes—such as AUM, services offered, classification, location, and website—and exports the results into a structured CSV file for further analysis.
 
-Firm name and legal name
+## Features
 
-Location details (street, city, state, country, postal code)
+- Parses SEC Form ADV XML data.
+- Extracts:
+  - Firm name and legal name
+  - Location details (street, city, state, country, postal code)
+  - Assets under management (AUM) breakdown
+  - Services offered (financial planning, portfolio management types, etc.)
+  - Client counts and size breakdown
+  - Wrap fee program details
+  - Website address (as clickable hyperlink in Excel)
+  - Firm classification (RIA or Portfolio Manager)
+  - Whether the firm has an investment vehicle
+- Outputs results in a customizable CSV format.
+- Interactive file picker GUI using `tkinter`.
 
-Assets under management (AUM) breakdown
+## Requirements
 
-Services offered (financial planning, portfolio management types, other)
+- Python 3.7+
+- Standard modules:
+  - `xml`
+  - `csv`
+  - `tkinter` (comes with most Python installations, but may require separate installation on some Linux systems)
 
-Client counts and size breakdown
+## Installation
 
-Wrap fee program details
-
-Website address (formatted as clickable hyperlink in Excel)
-
-Firm classification (RIA or Portfolio Manager)
-
-Whether the firm has an investment vehicle
-
-Outputs results in customizable CSV format.
-
-Interactive file picker GUI using tkinter.      
-
-Requirements
-Python 3.7+
-
-Modules:
-
-xml
-
-csv
-
-tkinter (comes with most Python installations)
-
-Installation
-Clone the repository:
-
-bash
-Copy
-Edit
-git clone https://github.com/yourusername/form-adv-extractor.git
-cd form-adv-extractor
-(Optional) Create a virtual environment:
-
-bash
-Copy
-Edit
+```bash
+git clone https://github.com/jared1776/advisor_data_extractor.git
+cd advisor_data_extractor
+# (Optional) Create a virtual environment:
 python -m venv venv
 source venv/bin/activate   # macOS/Linux
 venv\Scripts\activate      # Windows
+```
 
+## Usage
 
-Usage
 Run the script:
 
-bash
-Copy
-Edit
+```bash
 python form_adv_extractor.py
-When prompted, select the XML file downloaded from the SEC IAPD site.
+```
 
-Choose where to save the CSV output file.
+- When prompted, select the XML file downloaded from the SEC IAPD site.
+- Choose where to save the CSV output file.
+- The extracted data will be saved in the specified CSV.
 
-The extracted data will be saved in the specified CSV.
+> **Note:** The script launches a desktop GUI (not a web app) to select files.
 
+---
 
-Example XML Snippet (Input)
-xml
-Copy
-Edit
+## Example XML Snippet (Input)
+
+```xml
 <Firm>
     <Info BusNm="Example Advisers LLC" LegalNm="Example Advisers Legal Name" />
     <MainAddr Strt1="123 Main St" City="New York" State="NY" Cntry="USA" PostlCd="10001" />
@@ -88,52 +69,66 @@ Edit
         <WebAddr>https://www.exampleadvisers.com</WebAddr>
     </WebAddrs>
 </Firm>
+```
 
-XML to CSV Mapping Diagram
-text
-Copy
-Edit
+---
+
+## XML to CSV Mapping
+
+```
 +-------------------------+----------------------------+
-|        XML Tag          |        CSV Column         |
+|        XML Tag          |        CSV Column          |
 +-------------------------+----------------------------+
-| Info@BusNm              | Firm Name                 |
-| Info@LegalNm            | Legal Name                |
-| MainAddr@Strt1          | Street                    |
-| MainAddr@City           | City                      |
-| MainAddr@State          | State                     |
-| MainAddr@Cntry          | Country                   |
-| MainAddr@PostlCd        | Postal Code               |
-| Item1@Q1ODesc           | AUM Description           |
-| Item1@Q1O               | AUM Over 1B               |
-| Item5F@Q5F2A            | Discretionary AUM         |
-| Item5F@Q5F2B            | Non-Discretionary AUM     |
-| Item5F@Q5F2C            | Total AUM                 |
-| Item5F@Q5F3             | Non-US AUM                |
-| Item5G@Q5G1              | Financial Planning        |
-| Item5G@Q5G2              | PM (Individuals)          |
-| Item5G@Q5G5              | PM (Institutions)         |
-| Item5G@Q5G4              | PM (Pooled Vehicles)      |
-| Item5G@Q5G12Oth          | Other Services            |
-| Item5H@Q5H               | Clients Served            |
-| Item5H@Q5HMT500          | Clients Over 500          |
-| Item5I@Q5I2A             | Wrap Sponsor AUM          |
-| Item5I@Q5I2B             | Wrap Portfolio AUM        |
-| Item5I@Q5I2C             | Wrap Combined AUM         |
-| Item5J@Q5J1              | Limited Investment Advice |
-| Item5J@Q5J2              | Different Asset Comput.   |
-| WebAddr (first)         | Website 1 (Hyperlink)     |
-| Derived                  | Firm Type (RIA/PM)        |
-| Derived                  | Investment Vehicle (Y/N)  |
+| Info@BusNm              | Firm Name                  |
+| Info@LegalNm            | Legal Name                 |
+| MainAddr@Strt1          | Street                     |
+| MainAddr@City           | City                       |
+| MainAddr@State          | State                      |
+| MainAddr@Cntry          | Country                    |
+| MainAddr@PostlCd        | Postal Code                |
+| Item1@Q1ODesc           | AUM Description            |
+| Item1@Q1O               | AUM Over 1B                |
+| Item5F@Q5F2A            | Discretionary AUM          |
+| Item5F@Q5F2B            | Non-Discretionary AUM      |
+| Item5F@Q5F2C            | Total AUM                  |
+| Item5F@Q5F3             | Non-US AUM                 |
+| Item5G@Q5G1             | Financial Planning         |
+| Item5G@Q5G2             | PM (Individuals)           |
+| Item5G@Q5G5             | PM (Institutions)          |
+| Item5G@Q5G4             | PM (Pooled Vehicles)       |
+| Item5G@Q5G12Oth         | Other Services             |
+| Item5H@Q5H              | Clients Served             |
+| Item5H@Q5HMT500         | Clients Over 500           |
+| Item5I@Q5I2A            | Wrap Sponsor AUM           |
+| Item5I@Q5I2B            | Wrap Portfolio AUM         |
+| Item5I@Q5I2C            | Wrap Combined AUM          |
+| Item5J@Q5J1             | Limited Investment Advice  |
+| Item5J@Q5J2             | Different Asset Comput.    |
+| WebAddr (first)         | Website 1 (Hyperlink)      |
+| Derived                 | Firm Type (RIA/PM)         |
+| Derived                 | Investment Vehicle (Y/N)   |
 +-------------------------+----------------------------+
+```
 
+- **Derived Fields:**  
+  - _Firm Type_ is determined based on the XML attributes indicating whether the firm is a Registered Investment Adviser or Portfolio Manager.
+  - _Investment Vehicle_ is derived from related XML tags indicating the presence of such.
 
-Example Output (CSV)
-Firm Name	State	Total AUM	Firm Type	Website 1
-Example Advisers LLC	NY	2000000000	RIA	=HYPERLINK("https://exampleadvisers.com")
+---
 
-Notes
-Website links are formatted for Excel (HYPERLINK function).
+## Example Output (CSV)
 
-The script handles missing XML fields gracefully.
+```csv
+Firm Name,State,Total AUM,Firm Type,Website 1
+Example Advisers LLC,NY,2000000000,RIA,"=HYPERLINK(""https://www.exampleadvisers.com"")"
+```
 
-File write permissions are checked to prevent overwriting issues.
+---
+
+## Notes
+
+- Website links are formatted for Excel using the `HYPERLINK` function.
+- The script gracefully handles missing XML fields.
+- File write permissions are checked to prevent overwriting issues.
+
+---
