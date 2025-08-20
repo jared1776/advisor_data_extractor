@@ -40,6 +40,28 @@ venv\Scripts\activate      # Windows
 ```
 
 ## Usage
+## Getting the Data
+
+The SEC makes **Form ADV data** for all registered and exempt reporting advisers available for bulk download:
+
+👉 [SEC Investment Adviser Public Disclosure Compilation](https://adviserinfo.sec.gov/compilation)
+
+1. Go to the link above.  
+2. Download the latest feed file, named like:  
+IA_FIRM_SEC_Feed_YYYY_MM_DD.xml.gz
+
+markdown
+Copy
+Edit
+Example: `IA_FIRM_SEC_Feed_08_20_2025.xml.gz`  
+3. **Unzip** the file using 7-Zip, WinRAR, or the command line (`gzip -d`).  
+- This will produce a large `.xml` file (~70–80 MB).  
+4. Run the extractor against the `.xml` file:  
+```bash
+python advisor_data_extractor.py --in IA_FIRM_SEC_Feed_08_20_2025.xml --out firms.csv
+The script will parse the XML and generate a clean CSV that can be opened directly in Excel.
+
+⚠️ Note: Opening the .gz or .xml file directly in Excel will not work — you must first decompress and then use the extractor to convert the data into CSV.
 
 # Run with CLI mode using included sample
 python advisor_data_extractor.py --in samples/example_input.xml --out samples/example_output.csv
@@ -138,5 +160,10 @@ Example Advisers LLC,NY,2000000000,RIA,"=HYPERLINK(""https://www.exampleadvisers
 - Website links are formatted for Excel using the `HYPERLINK` function.
 - The script gracefully handles missing XML fields.
 - File write permissions are checked to prevent overwriting issues.
+
+## Acknowledgments
+
+This project was developed with the assistance of ChatGPT (by OpenAI) for code generation and documentation.  
+All code has been reviewed, tested, and adapted for this repository’s use case.
 
 ---
